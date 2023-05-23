@@ -5,6 +5,7 @@ import { put, takeEvery, takeLatest } from 'redux-saga/effects';
 function* fetchJobs() {
     try {
         const response = yield axios.get('/api/viewjobs');
+        console.log("Is anyone getting here?")
         yield put({
             type: 'SET_JOBS',
             payload: response.data

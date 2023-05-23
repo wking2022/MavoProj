@@ -10,12 +10,10 @@ function JobsPage() {
     const dateProper = { year: 'numeric', month: 'long', day: 'numeric' };
     const dispatch = useDispatch();
     const History = useHistory();
-    const id = useParams();
 
     useEffect(() => {
         dispatch({
             type: 'FETCH_JOBS',
-            payload: id
         })
     }, [])
 
@@ -28,28 +26,24 @@ function JobsPage() {
                 <p>Your ID is: {user.id}</p>
             </div>
 
-            <div className="" key={jobs.id}>
-                    <section> Job Name: <i><u> {jobs.jobname} </u></i> </section>
-                    <section> Job Number: <i><u> {jobs.jobnum} </u></i> </section>
-                    <section> Job Type: <i><u> {jobs.jobtype} </u></i> </section>
-                    <section> Start Date: <i><u> { new Date (jobs.start_date).toLocaleDateString('en-US', dateProper)} </u></i> </section>
-                    <section> Start Time: <i><u> {jobs.start_time} </u></i> </section>
-                    <section> Duration: <i><u> {jobs.duration} hours </u></i> </section>
-                    <section> Contact Name: <i><u> {jobs.contactname} </u></i> </section>
-                    <section> Contact Number: <i><u> {jobs.contactnum} </u></i> </section>
-                    <section> Job Notes: <i><u> {jobs.notes} </u></i> </section>
-
-                    {/* <section className="booking-detail">{new Date(booking.check_in_date).toLocaleDateString('en-US', dateProper)} - */}
-                                    {/* <br/>
-                                    {new Date(booking.check_out_date).toLocaleDateString('en-US', dateProper)}</section>
-                    <br></br> */}
-                    {/* <button text="submit" className="buttons" onClick={() => handleEdit(job.id)}> Edit Job </button>
-                    <button text="submit" className="buttons" onClick={() => handleDelete(job.id)}> Delete Job </button>
-                    <button text="submit" className="buttons" onClick={() => jobCompleteButton()}> Job Complete </button>
-                    <button text="submit" className="buttons" onClick={() => createAssignment()}> Create Job Assignment </button> */}
+            {jobs.length > 0 &&
+                <div>
+                    {
+                        jobs.map(job => (
+                            <div className="container" key={job.id}>
+                                <section> <i><b> {job.jobname} </b></i> </section>
+                                <section> <i> #{job.jobnum} </i> </section>
+                                <section> {new Date(job.start_date).toLocaleDateString('en-US', dateProper)} - {new Date(job.end_date).toLocaleDateString('en-US', dateProper)} </section>
+                                {/* <section> Contact Name: <i> {job.contactname} </i> </section>
+                                <section> Contact Number: <i> {job.contactnum} </i> </section> */}
+                                <br></br>
+                                <button text="submit" className="buttons" onClick={() => handleDetails(job.id)}> View Details </button>
+                            </div>
+                        ))
+                    }
                 </div>
-
-        </section>
+            }
+        </section >
     );
 }
 
